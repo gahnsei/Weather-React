@@ -1,24 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import useWeather from "./useWeather";
+import Header from "./Header";
+import Weather from "./Weather";
 
 function App() {
+  const {
+    input,
+    inputChange,
+    searchCity,
+    location,
+    background,
+    error,
+    loading
+  } = useWeather();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <img
+        className="city-background"
+        src={background}
+        alt={location.formattedAddress}
+      />
+      <div className="App">
+        <Header
+          input={input}
+          inputChange={inputChange}
+          searchCity={searchCity}
+          location={location}
+          error={error}
+        />
+
+        {location.formattedAddress ? (
+          <Weather location={location} loading={loading} />
+        ) : (
+          <div className="welcome-message slide-up">
+            <i className="fa-solid fa-cloud-sun"></i>
+            <span>
+              React
+              <br />
+              Weather
+            </span>
+          </div>
+        )}
+      </div>
+    </>
   );
 }
 
